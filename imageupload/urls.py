@@ -14,8 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
+    path('posts/', include('posts.urls')),   # posts 폴더의 urls 파일 사용하겠다
     path('admin/', admin.site.urls),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # settings.MEDIA_URL + MEDIA_ROOT
+# .jpg에 대한 경로는 posts나 admin으로 설정하지 않음 -> 동적으로 올린 파일에 대한 주소 만들기
+# settings MEDIA URL과 root로 설정함
+
+
